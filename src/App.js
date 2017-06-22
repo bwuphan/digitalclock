@@ -6,7 +6,7 @@ class App extends Component {
     constructor(props) {
       super(props);
       this.state = {
-        time: 'hello',
+        time: null,
       }
       this.getTime = this.getTime.bind(this);
     }
@@ -16,10 +16,20 @@ class App extends Component {
     }
     componentDidMount() {
       var getTime = () => {
-        var date = new Date().toTimeString().split(" ")[0];
-        console.log(date)
-        this.setState({'time': date});
-        console.log({time: date})
+        var date = new Date()
+        var meridian = 'am';
+        var hours = date.getHours();
+        // console.log('hours',hours)
+        var dateArray = date.toTimeString().split(" ")[0].split(':');
+        if (parseInt(hours) > 12) {
+          // console.log('HELLO')
+          meridian = 'pm';
+          dateArray[0] = (dateArray[0] - 12).toString();
+        }
+        // console.log('WOOSADASDSA', date.toTimeString().split(" ")[0].split(':'))
+        var dateString = dateArray.join(':') + meridian;
+        this.setState({'time': dateString});
+        // console.log({time: date})
       }
       setInterval(function() {
         getTime();
