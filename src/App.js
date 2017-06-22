@@ -6,29 +6,29 @@ class App extends Component {
     constructor(props) {
       super(props);
       this.state = {
-        time: null,
+        time: 'hello',
       }
       this.getTime = this.getTime.bind(this);
     }
     getTime() {
       var date = new Date();
       this.state.time = date;
-    };
+    }
     componentDidMount() {
+      var getTime = () => {
+        var date = new Date().toTimeString().split(" ")[0];
+        console.log(date)
+        this.setState({'time': date});
+        console.log({time: date})
+      }
       setInterval(function() {
         getTime();
       }, 1000)
     }
     render() {
-      console.log(this.state)
       return (
         <div className="App">
-          <div className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-           </div>
-          <p className="App-intro">
-            To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
+          <div className="time">{this.state.time}</div>
         </div>
       );
 
